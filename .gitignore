@@ -1,4 +1,5 @@
 .DS_Store
+.Rhistory
 create.R
 "PMRC 2022.Rproj"
 .Rproj.user
