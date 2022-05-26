@@ -1,0 +1,10 @@
+﻿,All Expenditures,Fire Protection,Housing & Community Development,Libraries,Natural Resources,Parks & Recreation,Sewerage,Solid Waste Management,reg
+Per capita special district spending in same functional area,-0.0000,-0.0087+,-0.0038+,-0.0083,0.0006,-0.0018,-0.0005,0.0068*,Municipalities
+,(0.0000),(0.0048),(0.0021),(0.0053),(0.0015),(0.0014),(0.0014),(0.0032),Municipalities
+Per capita special district spending in same functional area,-0.0001,-0.0190**,-0.0034,-0.0166*,0.0011,0.0002,-0.0053**,-0.0119*,Counties
+,(0.0002),(0.0059),(0.0026),(0.0084),(0.0010),(0.0073),(0.0019),(0.0054),Counties
+Controls,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Controls
+County FE,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Controls
+Year FE,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Controls
+MSA-Year FE,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Controls
+N,5925,5925,5925,5925,5925,5925,5925,5925,Controls

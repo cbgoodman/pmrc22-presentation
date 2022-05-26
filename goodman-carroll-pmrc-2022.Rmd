@@ -1,0 +1,304 @@
+---
+title: "Are Special Districts Strategic Complements or Strategic Substitutes?"
+subtitle: 
+author: .pull-left[Christopher B. Goodman, PhD] .pull-right[Deborah A. Carroll, PhD]
+institute: .pull-left[<br/>School of Public & Global Affairs<br/>Northern Illinois University] .pull-right[<br/>Government Finance Research Center<br/ > University of Illinois at Chicago]
+date: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    chakra: libs/remark-latest.min.js
+    css: [default, "assets/niu.css", "assets/niu-fonts.css"]
+    includes:
+      in_header: "assets/mathjax-equation-numbers.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+    navigation:
+        scroll: false # disable slide transitions by scrolling
+---
+
+class: center, middle
+
+### What happens to service delivery by general purpose local governments when a special district enters the public service marketplace?
+
+---
+
+## Motivation
+
+.large[
+- Special districts and general purpose local governments (cities, counties, and towns/townships) exist in the same local governance ecosystem
+  - Many of these governments do similar functions
+- Are these local government actors independent?
+  - Much evidence of interactions and collaborations among the same type of governments
+  - Some evidence of interactions and trade-offs between vertically-aligned general purpose governments
+  - Little empirical evidence of the role of special districts
+]
+
+---
+
+## Theoretical Propositions
+
+.large[
+We rely heavily on (and extend) the theoretical relationship between cities and homeowners associations (Helsley and Strange 1998, 2000; Cheung 2008)
+]
+
+--
+
+.large[.content-box-red[
+**Strategic Substitutes**: "strategic downloading", municipal governments reduce their spending on a service in response to spending by private (or special district) government in the same service area
+]]
+
+--
+ 
+.large[.content-box-blue[
+**Strategic Complements**: the presence of special district spending spurs general purpose local government spending, e.g. water and/or sewer districts create the need for regional treatment facilities at the county level 
+]]
+
+--
+
+.large[Which effect dominates, if any, is an empirical question.]
+
+---
+
+## Empirical Model
+
+.large[
+- Time Period: 1972 - 2017
+- Unit of Analysis: County
+- Data Sources: 
+  - Census of Governments
+  - Bureau of Economic Analysis
+  - U.S. Census Bureau
+  - Surveillance, Epidemiology, and End Results program
+]
+
+---
+
+## Identification Strategy
+
+
+.large[
+$$\begin{align*}\underbrace{\text{ln}\ g_{it}^{\text{city}}}_{\text{general purpose government spending}} = & \underbrace{\beta g_{it}^{\text{spdist}}}_{\text{special district spending}}   +   \underbrace{\delta X_{it}}_{\text{control variables}} + \\ &  \underbrace{d_i}_{\text{unit fixed effects}}  +  \underbrace{d_t}_{\text{time fixed effects}}  + \\ & \underbrace{d_{rt}}_{\text{MSA}\times\text{year fixed effects}}  +  \underbrace{\varepsilon_{it}}_{\text{composite error term}} \end{align*}$$
+]
+
+--
+
+- If special districts are .content-box-red[strategic substitutes] for general purpose governments, $\beta < 0$.
+
+--
+
+- If special districts are .content-box-blue[strategic complements] for general purpose governments, $\beta > 0$.
+
+---
+
+## Independent Variables
+
+.large[
+
+- Personal income per capita
+- Population
+- Population density
+- Population growth (5-year CAGR)
+- % 19 and younger
+- % 65 and older
+- Ethnic fractionalization
+
+]
+
+---
+
+## Methodology
+
+
+.pull-left[
+
+### .bold[Multiple disaggregations]
+- By type of local government
+  - Total general purpose, cities, counties
+- By functional area of service delivery
+  - Fire protection
+  - Housing & community development
+  - Libraries
+  - Natural resources
+  - Parks & recreation
+  - Sewerage 
+  - Solid waste management
+]
+
+.pull-right[
+
+### .bold[Empirics]
+- Estimated via OLS
+- Standard errors clustered on the county
+]
+
+---
+
+## Summary Statistics
+
+```{r, fig.height=8, fig.width=14, fig.retina=2, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+library("tidyverse"); library("scales")
+sumstats <- read.csv("sumstats.csv")
+
+sumstats %>% filter(type == "gp" | type == "sp") %>% 
+  filter( var != "All categories") %>% 
+  mutate(lower = 0,
+         upper = mean+stdev) %>% 
+  ggplot(aes(y=mean, x=var, fill=type)) +
+    geom_col(position = "dodge2") +
+    geom_errorbar(aes(ymin = lower, ymax = upper), position = position_dodge2(width = 0.5, padding = 0.5))+
+    scale_fill_manual(
+      name = NULL,
+      labels = c("General Purpose", "Special District"),
+      values = c(
+        "gp" = "#FEDB00", 
+        "sp" = "#1D428A")
+    ) +
+    scale_x_discrete(
+      labels = function(x) stringr::str_wrap(x, width = 16)
+    ) +
+    scale_y_continuous(labels = dollar) +
+# Theming
+labs(
+  y="Mean Spending per Capita",
+  x=NULL) +
+theme_minimal(base_family="Public Sans Thin") +
+# format legend
+theme(legend.position="top")+
+theme(legend.text=element_text(size=16))+
+# light, dotted major y-grid lines only
+theme(panel.grid=element_line())+
+theme(panel.grid.major.y=element_line(color="#2b2b2b", linetype="dotted", size=0.15))+
+theme(panel.grid.major.x=element_blank())+
+theme(panel.grid.minor.x=element_blank())+
+theme(panel.grid.minor.y=element_blank())+
+# light x-axis line only
+theme(axis.line=element_line())+
+theme(axis.line.y=element_blank())+
+theme(axis.line.x=element_blank())+
+# tick styling
+theme(axis.ticks=element_line())+
+theme(axis.ticks.x=element_blank())+
+theme(axis.ticks.y=element_blank())+
+theme(axis.ticks.length=unit(5, "pt"))+
+# x-axis labels
+theme(axis.text.x=element_text(size=16)) +
+# y-axis labels
+theme(axis.text.y=element_text(size=16)) +
+theme(axis.title=element_text(size=16))
+
+```
+
+---
+
+## Summary Statistics
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library("kableExtra")
+sumstats <- read.csv("sumstats.csv")
+
+sumstats %>% filter(type == "ind") %>% 
+  select(-c(type)) %>% 
+knitr::kable( 
+  format = "html",
+  col.names = c(
+    "Variable",
+    "Mean",
+    "St. Dev."
+  ),
+  align = "lcc"
+)
+  
+```
+
+---
+
+## Results - All General Purpose Governents
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library("kableExtra")
+reg <- read.csv("regresults.csv")
+
+reg %>%  
+knitr::kable( 
+  format = "html",
+  col.names = c(
+    "Variable",
+    "All expenditures",
+    "Fire protection",
+    "Housing &\ncommunity development",
+    "Libraries",
+    "Natural resources",
+    "Parks &\nrecreation",
+    "Sewerage",
+    "Solid\nwaste\nmanagement"
+  ),
+  align = "lcccccccc"
+) %>% 
+   kable_styling(font_size = 18) %>% 
+    column_spec(1, width_min = '1.5in')
+
+```
+
+---
+
+## Results - Subgroups
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library("kableExtra")
+reg2 <- read.csv("regresults2.csv") %>% 
+  mutate(reg = as.factor(reg))
+
+reg2 %>%  
+  select(-reg) %>% 
+knitr::kable( 
+  format = "html",
+  col.names = c(
+    "Variable",
+    "All expenditures",
+    "Fire protection",
+    "Housing &\ncommunity development",
+    "Libraries",
+    "Natural resources",
+    "Parks &\nrecreation",
+    "Sewerage",
+    "Solid\nwaste\nmanagement"
+  ),
+  align = "lcccccccc"
+  ) %>% 
+  kable_styling(font_size = 16) %>% 
+  column_spec(1, width_min = '1.5in') %>% 
+  pack_rows("Municipalities", start_row = 1, end_row = 2) %>% 
+  pack_rows("Counties", start_row = 3, end_row = 4) %>% 
+  pack_rows("Controls", start_row = 5, end_row = 9)
+
+```
+
+---
+
+## Discussion & Conclusions
+
+.large[
+- Reasonable evidence that special district spending in some functional areas is a .content-box-red[strategic substitute] for general purpose local government spending
+  - A $1 per capita increase in special district spending is associated with a _0.5 to 1.5% decline_ in county spending on the same function
+- Suggests that special districts in these areas (fire, libraries, sewerage, solid waste) are, on average, of a regional nature
+  - County areas are trading local services for more regional services
+
+]
+
+---
+class: title-slide-final, middle
+background-image: url(assets/NIU_horz_white.png)
+background-size: 260px
+background-position: 5% 5%
+
+## Thanks!
+
+|                                                                           |                       |
+| :------------------------------------------------------------------------ | :-------------------- |
+| <a href="mailto:cgoodman@niu.edu">`r icons::icon_style(icons::fontawesome("paper-plane"), fill = "white")`     | cgoodman@niu.edu      |
+| <a href="https://www.cgoodman.com">`r icons::icon_style(icons::fontawesome("link"), fill = "white")`           | cgoodman.com          |
+| <a href="https://twitter.com/cbgoodman">`r icons::icon_style(icons::fontawesome("twitter"), fill = "white")`   | @cbgoodman            |
+| <a href="https://github.com/cbgoodman">`r icons::icon_style(icons::fontawesome("github"), fill = "white")`     | cbgoodman             |

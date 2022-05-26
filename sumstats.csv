@@ -1,0 +1,24 @@
+﻿type,var,mean,stdev
+gp,All categories,1769.794,1982.923
+gp,Fire protection,13.762,53.13
+gp,Housing & community development ,36.164,121.137
+gp,Libraries,16.424,20.954
+gp,Natural resources,10.593,36.622
+gp,Parks & recreation,57.265,64.759
+gp,Sewerage,90.015,101.824
+gp,Solid waste management,45.065,52.078
+sp,All categories,230.522,429.441
+sp,Fire protection,10.072,27.558
+sp,Housing & community development ,33.218,58.801
+sp,Libraries,8.188,20.74
+sp,Natural resources,9.333,59.869
+sp,Parks & recreation,7.208,28.787
+sp,Sewerage,22.039,70.268
+sp,Solid waste management,3.589,18.83
+ind,"Personal income, per capita",37.504,11.626
+ind,Population,229.355,395.082
+ind,Population density,0.644,2.758
+ind,Population growth,1.35,1.714
+ind,% 19 and younger,0.292,0.04
+ind,% 65 and older,0.125,0.037
+ind,Ethnic fractionalization,0.204,0.156
